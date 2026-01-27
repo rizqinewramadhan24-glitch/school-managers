@@ -3,13 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🎨 School Manager - Sistem Informasi Sekolah</title>
   
-  <meta name="description" content="School Manager dengan multiple theme dan motif pilihan">
+  <!-- ===================== SEO META TAGS ===================== -->
+  <title>🏫 School Manager | Sistem Informasi Sekolah Modern</title>
+  <meta name="description" content="Aplikasi web gratis untuk mengelola data sekolah. Fitur: dark mode, 6 tema pilihan, pencarian instan, penyimpanan lokal. Kelola guru, mapel, dan ekstrakurikuler.">
+  <meta name="keywords" content="sistem informasi sekolah, school manager, aplikasi sekolah, manajemen sekolah, web app sekolah, dark mode, javascript, html, css, guru, mata pelajaran, ekstrakurikuler">
   <meta name="author" content="Rizqi">
+  <meta name="robots" content="index, follow">
   
+  <!-- Open Graph untuk Facebook/WhatsApp/LinkedIn -->
+  <meta property="og:title" content="🏫 School Manager | Sistem Informasi Sekolah Modern">
+  <meta property="og:description" content="Aplikasi web gratis untuk mengelola data sekolah dengan fitur dark mode & 6 tema pilihan">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://rizqinewramadhan24.github.io/school-manager/">
+  <meta property="og:image" content="https://raw.githubusercontent.com/rizqinewramadhan24/school-manager/main/thumbnail.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name" content="School Manager">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="🏫 School Manager">
+  <meta name="twitter:description" content="Sistem informasi sekolah modern dengan dark mode dan 6 tema">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/rizqinewramadhan24/school-manager/main/thumbnail.png">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+  
+  <!-- ===================== STYLES & FONTS ===================== -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
+  
+  <style>
+    /* Inline untuk loading cepat */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: #fff;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
 </head>
 
 <body data-theme="light" data-motif="default">
@@ -20,53 +61,51 @@
     <!-- Header -->
     <header>
       <div class="logo-container">
-        <div class="logo">
+        <div class="logo" aria-label="Logo School Manager">
           <i class="fas fa-school"></i>
         </div>
         <div class="logo-text">
           <h1>School Manager</h1>
-          <p>Solusi Administrasi Sekolah Modern</p>
+          <p>Sistem Informasi Sekolah Terintegrasi</p>
         </div>
       </div>
       
-      <!-- Theme Selector Container -->
+      <!-- Theme Selector -->
       <div class="theme-selector-container">
-        <!-- Dark/Light Toggle -->
-        <div class="theme-toggle" onclick="toggleDarkMode()">
+        <div class="theme-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
           <i class="fas fa-moon"></i>
           <span>Dark Mode</span>
         </div>
         
-        <!-- Motif Dropdown -->
         <div class="motif-dropdown">
-          <button class="motif-toggle" onclick="toggleMotifDropdown()">
+          <button class="motif-toggle" onclick="toggleMotifDropdown()" aria-label="Pilih motif tema">
             <i class="fas fa-palette"></i>
             <span>Pilih Motif</span>
             <i class="fas fa-chevron-down"></i>
           </button>
           
           <div class="motif-options">
-            <div class="motif-option" onclick="changeMotif('default')">
+            <div class="motif-option" onclick="changeMotif('default')" aria-label="Motif default">
               <div class="motif-preview default-motif"></div>
               <span>Default</span>
             </div>
-            <div class="motif-option" onclick="changeMotif('gradient')">
+            <div class="motif-option" onclick="changeMotif('gradient')" aria-label="Motif gradient">
               <div class="motif-preview gradient-motif"></div>
               <span>Gradient</span>
             </div>
-            <div class="motif-option" onclick="changeMotif('education')">
+            <div class="motif-option" onclick="changeMotif('education')" aria-label="Motif pendidikan">
               <div class="motif-preview education-motif"></div>
               <span>Education</span>
             </div>
-            <div class="motif-option" onclick="changeMotif('pattern')">
+            <div class="motif-option" onclick="changeMotif('pattern')" aria-label="Motif pattern">
               <div class="motif-preview pattern-motif"></div>
               <span>Pattern</span>
             </div>
-            <div class="motif-option" onclick="changeMotif('glass')">
+            <div class="motif-option" onclick="changeMotif('glass')" aria-label="Motif glassmorphism">
               <div class="motif-preview glass-motif"></div>
               <span>Glassmorphism</span>
             </div>
-            <div class="motif-option" onclick="changeMotif('nature')">
+            <div class="motif-option" onclick="changeMotif('nature')" aria-label="Motif alam">
               <div class="motif-preview nature-motif"></div>
               <span>Nature</span>
             </div>
@@ -77,67 +116,69 @@
 
     <!-- Stats -->
     <div class="stats-container">
-      <div class="stat-card mapel">
-        <i class="fas fa-book-open"></i>
+      <div class="stat-card mapel" role="region" aria-label="Statistik mata pelajaran">
+        <i class="fas fa-book-open" aria-hidden="true"></i>
         <h3 id="mapelCount">0</h3>
         <p>Mata Pelajaran</p>
       </div>
-      <div class="stat-card guru">
-        <i class="fas fa-chalkboard-teacher"></i>
+      <div class="stat-card guru" role="region" aria-label="Statistik guru">
+        <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
         <h3 id="guruCount">0</h3>
         <p>Guru</p>
       </div>
-      <div class="stat-card ekskul">
-        <i class="fas fa-futbol"></i>
+      <div class="stat-card ekskul" role="region" aria-label="Statistik ekstrakurikuler">
+        <i class="fas fa-futbol" aria-hidden="true"></i>
         <h3 id="ekskulCount">0</h3>
         <p>Ekstrakurikuler</p>
       </div>
-      <div class="stat-card total">
-        <i class="fas fa-database"></i>
+      <div class="stat-card total" role="region" aria-label="Total data">
+        <i class="fas fa-database" aria-hidden="true"></i>
         <h3 id="totalCount">0</h3>
         <p>Total Data</p>
       </div>
     </div>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <main class="main-content">
       <!-- Search Card -->
-      <div class="card">
+      <section class="card" aria-labelledby="search-title">
         <div class="card-header">
-          <i class="fas fa-search"></i>
-          <h3>Pencarian Data</h3>
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <h3 id="search-title">Pencarian Data</h3>
         </div>
         
         <div class="search-box">
-          <i class="fas fa-search"></i>
-          <input type="text" id="searchInput" placeholder="Cari mapel/guru/ekskul...">
+          <i class="fas fa-search" aria-hidden="true"></i>
+          <input type="text" id="searchInput" placeholder="Cari mapel, guru, atau ekskul..." aria-label="Kotak pencarian data">
         </div>
         
         <div class="button-group">
-          <button class="btn btn-primary" onclick="searchData()">
+          <button class="btn btn-primary" onclick="searchData()" aria-label="Cari data">
             <i class="fas fa-search"></i> Cari
           </button>
-          <button class="btn btn-secondary" onclick="showAllData()">
+          <button class="btn btn-secondary" onclick="showAllData()" aria-label="Tampilkan semua data">
             <i class="fas fa-list"></i> Lihat Semua
           </button>
-          <button class="btn btn-danger" onclick="clearAllData()">
+          <button class="btn btn-danger" onclick="clearAllData()" aria-label="Hapus semua data">
             <i class="fas fa-trash"></i> Hapus Semua
           </button>
         </div>
         
-        <div id="results" class="results-container"></div>
-      </div>
+        <div id="results" class="results-container" role="region" aria-live="polite">
+          <!-- Results populated by JS -->
+        </div>
+      </section>
 
       <!-- Add Data Card -->
-      <div class="card">
+      <section class="card" aria-labelledby="add-data-title">
         <div class="card-header">
-          <i class="fas fa-plus-circle"></i>
-          <h3>Tambah Data Baru</h3>
+          <i class="fas fa-plus-circle" aria-hidden="true"></i>
+          <h3 id="add-data-title">Tambah Data Baru</h3>
         </div>
         
         <div class="form-group">
           <label for="tipeInput">Jenis Data</label>
-          <select id="tipeInput">
+          <select id="tipeInput" aria-label="Pilih jenis data">
             <option value="">Pilih jenis data</option>
             <option value="mapel">Mata Pelajaran</option>
             <option value="guru">Guru</option>
@@ -147,29 +188,47 @@
         
         <div class="form-group">
           <label for="namaInput">Nama</label>
-          <input type="text" id="namaInput" placeholder="Masukkan nama data">
+          <input type="text" id="namaInput" placeholder="Masukkan nama data" aria-label="Nama data">
         </div>
         
-        <button class="btn-add" onclick="addData()">
+        <button class="btn-add" onclick="addData()" aria-label="Tambah data baru">
           <i class="fas fa-plus"></i> Tambah Data
         </button>
         
-        <div class="info-note">
-          <i class="fas fa-info-circle"></i>
-          <p>Data disimpan otomatis di browser</p>
+        <div class="info-note" role="note">
+          <i class="fas fa-info-circle" aria-hidden="true"></i>
+          <p>Data akan disimpan otomatis di browser Anda</p>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
 
     <!-- Footer -->
-    <footer>
-      <p>© 2026 <span class="developer">School Manager</span> — Sistem Informasi Sekolah</p>
+    <footer role="contentinfo">
+      <p>© 2026 <span class="developer">School Manager</span> — Sistem Informasi Sekolah Terintegrasi</p>
       <p>Dikembangkan oleh <span class="developer">Rizqi</span> | v3.0</p>
-      <p class="current-motif">Motif: <span id="currentMotif">Default</span></p>
+      <p class="current-motif">Motif aktif: <span id="currentMotif">Default</span></p>
+      <p class="live-demo">
+        <i class="fas fa-globe"></i> 
+        <a href="https://rizqitsaqif.github.io/school-manager/" target="_blank" rel="noopener">Live Demo</a> | 
+        <a href="https://github.com/rizqitsaqif/school-manager" target="_blank" rel="noopener">Source Code</a>
+      </p>
     </footer>
   </div>
 
+  <!-- JavaScript Files -->
   <script src="script.js"></script>
   <script src="theme.js"></script>
+  
+  <!-- Initialize -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Show welcome message
+      setTimeout(() => {
+        if (typeof showNotification === 'function') {
+          showNotification('🎉 Selamat datang di School Manager!', 'success');
+        }
+      }, 1000);
+    });
+  </script>
 </body>
 </html>
