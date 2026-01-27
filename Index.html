@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>📚 Sistem Informasi Sekolah – School Manager</title>
+
+  <!-- SEO Meta -->
+  <meta name="description" content="School Manager: Sistem informasi sekolah untuk menambah, mencari, dan mengelola data mapel, guru, dan ekskul secara mudah.">
+  <meta name="keywords" content="sekolah, mapel, guru, ekskul, informasi sekolah, school manager, data sekolah">
+  <meta name="robots" content="index, follow">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="books.png">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body[data-theme="dark"] {
+      background-color: #121212;
+      color: #e0e0e0;
+    }
+    body[data-theme="light"] {
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container { max-width: 600px; margin: 20px auto; }
+    .card { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    body[data-theme="dark"] .card { background: #1e1e1e; box-shadow: 0 0 10px rgba(255,255,255,0.05); }
+    input { padding: 8px; margin: 5px 0; width: calc(100% - 16px); border-radius: 4px; border: 1px solid #ccc; }
+    body[data-theme="dark"] input { border: 1px solid #555; background: #2b2b2b; color: #fff; }
+    button { padding: 8px 12px; margin: 5px; border: none; border-radius: 4px; cursor: pointer; }
+    .secondary { background: #ddd; }
+    body[data-theme="dark"] .secondary { background: #444; color: #fff; }
+    .results p { display: flex; justify-content: space-between; align-items: center; margin: 5px 0; }
+    .delete-btn { background: red; color: #fff; padding: 2px 6px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+  </style>
+</head>
+<body data-theme="light">
+
+  <!-- Tombol Dark Mode -->
+  <div style="text-align:center; margin-top:20px;">
+    <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+  </div>
+
+  <div class="container">
+    <h1>📚 Sistem Informasi Sekolah</h1>
+
+    <!-- Pencarian Data -->
+    <div class="card">
+      <h3>Pencarian Data</h3>
+      <input type="text" id="searchInput" placeholder="Cari mapel / guru / ekskul" oninput="searchData()">
+      <button onclick="searchData()">Cari</button>
+      <button class="secondary" onclick="showAllData()">Lihat Semua</button>
+      <div id="results" class="results"></div>
+    </div>
+
+    <!-- Tambah Data -->
+    <div class="card">
+      <h3>Tambah Data</h3>
+      <input type="text" id="tipeInput" placeholder="mapel / guru / ekskul">
+      <input type="text" id="namaInput" placeholder="Nama">
+      <button onclick="addData()">Tambah</button>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // === Dark Mode ===
+    function toggleDarkMode() {
+      const body = document.body;
+      const theme = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      body.setAttribute('data-theme', theme);
+    }
+
+    // === Data dan LocalStorage ===
+    let data = JSON.parse(localStorage.getItem('schoolData')) || [];
+
+    function saveData() {
+      localStorage.setItem('schoolData', JSON.stringify(data));
+    }
+
+    // === Tampilkan semua data ===
+    function showAllData() {
+      const results = document.getElementById('results');
+      if(data.length === 0){
+        results.innerHTML = `<p>Belum ada data</p>`;
+        return;
+      }
+      results.innerHTML = data.map((d, index) => `
+        <p>📌 [${d.tipe}] ${d.nama} 
+        <span class="delete-btn" onclick="deleteData(${index})">Hapus</span></p>
+      `).join('');
+    }
+
+    // === Cari data ===
+    function searchData() {
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const results = document.getElementById('results');
+      const filtered = data.filter(d =>
+        d.nama.toLowerCase().includes(input) || d.tipe.toLowerCase().includes(input)
+      );
+      if(filtered.length === 0){
+        results.innerHTML = `<p>Tidak ditemukan</p>`;
+        return;
+      }
+      results.innerHTML = filtered.map(d => `
+        <p>📌 [${d.tipe}] ${d.nama} 
+        <span class="delete-btn" onclick="deleteData(${data.indexOf(d)})">Hapus</span></p>
+      `).join('');
+    }
+
+    // === Tambah data ===
+    function addData() {
+      const tipe = document.getElementById('tipeInput').value.trim();
+      const nama = document.getElementById('namaInput').value.trim();
+      if(tipe && nama){
+        data.push({tipe, nama});
+        saveData();
+        document.getElementById('tipeInput').value = '';
+        document.getElementById('namaInput').value = '';
+        showAllData();
+      } else {
+        alert('Isi semua kolom!');
+      }
+    }
+
+    // === Hapus data ===
+    function deleteData(index){
+      if(confirm('Yakin ingin menghapus data ini?')){
+        data.splice(index, 1);
+        saveData();
+        showAllData();
+      }
+    }
+
+    // === Inisialisasi halaman ===
+    showAllData();
+  </script>
+</body>
+</html>

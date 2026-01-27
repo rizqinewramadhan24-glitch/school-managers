@@ -1,0 +1,99 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  background: #f5f7fb;
+  margin: 0;
+  padding: 0;
+  color: #1f2933;
+}
+
+/* Container utama */
+.container {
+  width: 500px;
+  margin: 60px auto;
+}
+
+/* Judul */
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* Card */
+.card {
+  background: white;
+  padding: 24px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+/* Input */
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+}
+
+/* Button */
+button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 10px;
+  background: #6366f1;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+button.secondary {
+  background: #6b7280;
+  margin-left: 5px;
+}
+
+/* Results */
+.results {
+  margin-top: 12px;
+}
+
+/* Item hasil pencarian */
+.result-item {
+  margin-top: 8px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  color: white;
+  font-size: 14px;
+}
+
+/* Badge warna kategori */
+.guru { background: #3b82f6; }    /* biru */
+.mapel { background: #22c55e; }   /* hijau */
+.ekskul { background: #fb923c; }  /* oranye */
+
+/* ================= DARK MODE ================= */
+
+body.dark {
+  background: #0f172a;
+  color: white;
+}
+
+body.dark .card {
+  background: #1e293b;
+}
+
+body.dark input {
+  background: #020617;
+  color: white;
+  border-color: #334155;
+}

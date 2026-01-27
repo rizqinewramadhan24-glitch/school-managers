@@ -1,0 +1,26 @@
+[
+  {
+    "tipe": "mapel",
+    "nama": "Matematika",
+    "guru": "Pak Ahmad",
+    "kelas": "X IPA"
+  },
+  {
+    "tipe": "mapel",
+    "nama": "Fisika",
+    "guru": "Bu Rina",
+    "kelas": "XI IPA"
+  },
+  {
+    "tipe": "guru",
+    "nama": "Pak Ahmad",
+    "mapel": "Matematika",
+    "ruang": "Ruang 201"
+  },
+  {
+    "tipe": "ekskul",
+    "nama": "Pramuka",
+    "pembina": "Pak Dedi",
+    "jadwal": "Jumat 15.00"
+  }
+]
