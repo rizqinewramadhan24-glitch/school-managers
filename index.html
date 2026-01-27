@@ -3,159 +3,173 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>📚 Sistem Informasi Sekolah – School Manager</title>
-
-  <!-- SEO Meta -->
-  <meta name="description" content="School Manager: Sistem informasi sekolah untuk menambah, mencari, dan mengelola data mapel, guru, dan ekskul secara mudah.">
-  <meta name="keywords" content="sekolah, mapel, guru, ekskul, informasi sekolah, school manager, data sekolah">
-  <meta name="robots" content="index, follow">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="School Manager">
-  <meta property="og:description" content="Sistem informasi sekolah sederhana berbasis web.">
-  <meta property="og:type" content="website">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="books.png">
-
-  <!-- CSS -->
+  <title>🎨 School Manager - Sistem Informasi Sekolah</title>
+  
+  <meta name="description" content="School Manager dengan multiple theme dan motif pilihan">
+  <meta name="author" content="Rizqi">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
-
-  <!-- Inline CSS (punyamu tetap) -->
-  <style>
-    body[data-theme="dark"] {
-      background-color: #121212;
-      color: #e0e0e0;
-    }
-    body[data-theme="light"] {
-      background-color: #f5f5f5;
-      color: #333;
-    }
-    .container { max-width: 600px; margin: 20px auto; }
-    .card { background: #fff; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    body[data-theme="dark"] .card { background: #1e1e1e; box-shadow: 0 0 10px rgba(255,255,255,0.05); }
-    input { padding: 8px; margin: 5px 0; width: calc(100% - 16px); border-radius: 4px; border: 1px solid #ccc; }
-    body[data-theme="dark"] input { border: 1px solid #555; background: #2b2b2b; color: #fff; }
-    button { padding: 8px 12px; margin: 5px; border: none; border-radius: 4px; cursor: pointer; }
-    .secondary { background: #ddd; }
-    body[data-theme="dark"] .secondary { background: #444; color: #fff; }
-    .results p { display: flex; justify-content: space-between; align-items: center; margin: 5px 0; }
-    .delete-btn { background: red; color: #fff; padding: 2px 6px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
-
-    footer {
-      text-align: center;
-      margin: 40px 0 20px;
-      font-size: 0.9rem;
-      opacity: 0.7;
-    }
-  </style>
 </head>
 
-<body data-theme="light">
+<body data-theme="light" data-motif="default">
+  <!-- Notification -->
+  <div id="notification" class="notification"></div>
 
-  <!-- Tombol Dark Mode -->
-  <div style="text-align:center; margin-top:20px;">
-    <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="logo-container">
+        <div class="logo">
+          <i class="fas fa-school"></i>
+        </div>
+        <div class="logo-text">
+          <h1>School Manager</h1>
+          <p>Solusi Administrasi Sekolah Modern</p>
+        </div>
+      </div>
+      
+      <!-- Theme Selector Container -->
+      <div class="theme-selector-container">
+        <!-- Dark/Light Toggle -->
+        <div class="theme-toggle" onclick="toggleDarkMode()">
+          <i class="fas fa-moon"></i>
+          <span>Dark Mode</span>
+        </div>
+        
+        <!-- Motif Dropdown -->
+        <div class="motif-dropdown">
+          <button class="motif-toggle" onclick="toggleMotifDropdown()">
+            <i class="fas fa-palette"></i>
+            <span>Pilih Motif</span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+          
+          <div class="motif-options">
+            <div class="motif-option" onclick="changeMotif('default')">
+              <div class="motif-preview default-motif"></div>
+              <span>Default</span>
+            </div>
+            <div class="motif-option" onclick="changeMotif('gradient')">
+              <div class="motif-preview gradient-motif"></div>
+              <span>Gradient</span>
+            </div>
+            <div class="motif-option" onclick="changeMotif('education')">
+              <div class="motif-preview education-motif"></div>
+              <span>Education</span>
+            </div>
+            <div class="motif-option" onclick="changeMotif('pattern')">
+              <div class="motif-preview pattern-motif"></div>
+              <span>Pattern</span>
+            </div>
+            <div class="motif-option" onclick="changeMotif('glass')">
+              <div class="motif-preview glass-motif"></div>
+              <span>Glassmorphism</span>
+            </div>
+            <div class="motif-option" onclick="changeMotif('nature')">
+              <div class="motif-preview nature-motif"></div>
+              <span>Nature</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Stats -->
+    <div class="stats-container">
+      <div class="stat-card mapel">
+        <i class="fas fa-book-open"></i>
+        <h3 id="mapelCount">0</h3>
+        <p>Mata Pelajaran</p>
+      </div>
+      <div class="stat-card guru">
+        <i class="fas fa-chalkboard-teacher"></i>
+        <h3 id="guruCount">0</h3>
+        <p>Guru</p>
+      </div>
+      <div class="stat-card ekskul">
+        <i class="fas fa-futbol"></i>
+        <h3 id="ekskulCount">0</h3>
+        <p>Ekstrakurikuler</p>
+      </div>
+      <div class="stat-card total">
+        <i class="fas fa-database"></i>
+        <h3 id="totalCount">0</h3>
+        <p>Total Data</p>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Search Card -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-search"></i>
+          <h3>Pencarian Data</h3>
+        </div>
+        
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Cari mapel/guru/ekskul...">
+        </div>
+        
+        <div class="button-group">
+          <button class="btn btn-primary" onclick="searchData()">
+            <i class="fas fa-search"></i> Cari
+          </button>
+          <button class="btn btn-secondary" onclick="showAllData()">
+            <i class="fas fa-list"></i> Lihat Semua
+          </button>
+          <button class="btn btn-danger" onclick="clearAllData()">
+            <i class="fas fa-trash"></i> Hapus Semua
+          </button>
+        </div>
+        
+        <div id="results" class="results-container"></div>
+      </div>
+
+      <!-- Add Data Card -->
+      <div class="card">
+        <div class="card-header">
+          <i class="fas fa-plus-circle"></i>
+          <h3>Tambah Data Baru</h3>
+        </div>
+        
+        <div class="form-group">
+          <label for="tipeInput">Jenis Data</label>
+          <select id="tipeInput">
+            <option value="">Pilih jenis data</option>
+            <option value="mapel">Mata Pelajaran</option>
+            <option value="guru">Guru</option>
+            <option value="ekskul">Ekstrakurikuler</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="namaInput">Nama</label>
+          <input type="text" id="namaInput" placeholder="Masukkan nama data">
+        </div>
+        
+        <button class="btn-add" onclick="addData()">
+          <i class="fas fa-plus"></i> Tambah Data
+        </button>
+        
+        <div class="info-note">
+          <i class="fas fa-info-circle"></i>
+          <p>Data disimpan otomatis di browser</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>© 2026 <span class="developer">School Manager</span> — Sistem Informasi Sekolah</p>
+      <p>Dikembangkan oleh <span class="developer">Rizqi</span> | v3.0</p>
+      <p class="current-motif">Motif: <span id="currentMotif">Default</span></p>
+    </footer>
   </div>
 
-  <main class="container">
-    <h1>📚 Sistem Informasi Sekolah</h1>
-
-    <!-- Pencarian Data -->
-    <div class="card">
-      <h3>Pencarian Data</h3>
-      <input type="text" id="searchInput" placeholder="Cari mapel / guru / ekskul" oninput="searchData()">
-      <button onclick="searchData()">Cari</button>
-      <button class="secondary" onclick="showAllData()">Lihat Semua</button>
-      <div id="results" class="results"></div>
-    </div>
-
-    <!-- Tambah Data -->
-    <div class="card">
-      <h3>Tambah Data</h3>
-      <input type="text" id="tipeInput" placeholder="mapel / guru / ekskul">
-      <input type="text" id="namaInput" placeholder="Nama">
-      <button onclick="addData()">Tambah</button>
-    </div>
-  </main>
-
-  <footer>
-    © 2026 School Manager — Rizqi
-  </footer>
-
-  <!-- JavaScript (punyamu TETAP) -->
-  <script>
-    // === Dark Mode ===
-    function toggleDarkMode() {
-      const body = document.body;
-      const theme = body.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-      body.setAttribute('data-theme', theme);
-    }
-
-    // === Data dan LocalStorage ===
-    let data = JSON.parse(localStorage.getItem('schoolData')) || [];
-
-    function saveData() {
-      localStorage.setItem('schoolData', JSON.stringify(data));
-    }
-
-    // === Tampilkan semua data ===
-    function showAllData() {
-      const results = document.getElementById('results');
-      if(data.length === 0){
-        results.innerHTML = `<p>Belum ada data</p>`;
-        return;
-      }
-      results.innerHTML = data.map((d, index) => `
-        <p>📌 [${d.tipe}] ${d.nama} 
-        <span class="delete-btn" onclick="deleteData(${index})">Hapus</span></p>
-      `).join('');
-    }
-
-    // === Cari data ===
-    function searchData() {
-      const input = document.getElementById('searchInput').value.toLowerCase();
-      const results = document.getElementById('results');
-      const filtered = data.filter(d =>
-        d.nama.toLowerCase().includes(input) || d.tipe.toLowerCase().includes(input)
-      );
-      if(filtered.length === 0){
-        results.innerHTML = `<p>Tidak ditemukan</p>`;
-        return;
-      }
-      results.innerHTML = filtered.map(d => `
-        <p>📌 [${d.tipe}] ${d.nama} 
-        <span class="delete-btn" onclick="deleteData(${data.indexOf(d)})">Hapus</span></p>
-      `).join('');
-    }
-
-    // === Tambah data ===
-    function addData() {
-      const tipe = document.getElementById('tipeInput').value.trim();
-      const nama = document.getElementById('namaInput').value.trim();
-      if(tipe && nama){
-        data.push({tipe, nama});
-        saveData();
-        document.getElementById('tipeInput').value = '';
-        document.getElementById('namaInput').value = '';
-        showAllData();
-      } else {
-        alert('Isi semua kolom!');
-      }
-    }
-
-    // === Hapus data ===
-    function deleteData(index){
-      if(confirm('Yakin ingin menghapus data ini?')){
-        data.splice(index, 1);
-        saveData();
-        showAllData();
-      }
-    }
-
-    // === Inisialisasi halaman ===
-    showAllData();
-  </script>
+  <script src="script.js"></script>
+  <script src="theme.js"></script>
 </body>
 </html>
