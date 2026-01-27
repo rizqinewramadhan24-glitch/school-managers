@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>📚 Sistem Informasi Sekolah – School Manager</title>
 
   <!-- SEO Meta -->
@@ -10,11 +11,18 @@
   <meta name="keywords" content="sekolah, mapel, guru, ekskul, informasi sekolah, school manager, data sekolah">
   <meta name="robots" content="index, follow">
 
+  <!-- Open Graph -->
+  <meta property="og:title" content="School Manager">
+  <meta property="og:description" content="Sistem informasi sekolah sederhana berbasis web.">
+  <meta property="og:type" content="website">
+
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="books.png">
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- Inline CSS (punyamu tetap) -->
   <style>
     body[data-theme="dark"] {
       background-color: #121212;
@@ -34,8 +42,16 @@
     body[data-theme="dark"] .secondary { background: #444; color: #fff; }
     .results p { display: flex; justify-content: space-between; align-items: center; margin: 5px 0; }
     .delete-btn { background: red; color: #fff; padding: 2px 6px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+
+    footer {
+      text-align: center;
+      margin: 40px 0 20px;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
   </style>
 </head>
+
 <body data-theme="light">
 
   <!-- Tombol Dark Mode -->
@@ -43,7 +59,7 @@
     <button onclick="toggleDarkMode()">🌙 Dark Mode</button>
   </div>
 
-  <div class="container">
+  <main class="container">
     <h1>📚 Sistem Informasi Sekolah</h1>
 
     <!-- Pencarian Data -->
@@ -62,9 +78,13 @@
       <input type="text" id="namaInput" placeholder="Nama">
       <button onclick="addData()">Tambah</button>
     </div>
-  </div>
+  </main>
 
-  <!-- JavaScript -->
+  <footer>
+    © 2026 School Manager — Rizqi
+  </footer>
+
+  <!-- JavaScript (punyamu TETAP) -->
   <script>
     // === Dark Mode ===
     function toggleDarkMode() {
