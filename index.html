@@ -11,6 +11,14 @@
   <meta name="author" content="Rizqi">
   <meta name="robots" content="index, follow">
   
+  <!-- ===================== PWA META TAGS ===================== -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4361ee">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="School Manager">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+  
   <!-- Open Graph untuk Facebook/WhatsApp/LinkedIn -->
   <meta property="og:title" content="🏫 School Manager | Sistem Informasi Sekolah Modern">
   <meta property="og:description" content="Aplikasi web gratis untuk mengelola data sekolah dengan fitur dark mode & 6 tema pilihan">
@@ -50,12 +58,53 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+    
+    /* Install Button Styles */
+    .install-btn {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: linear-gradient(135deg, #4361ee, #7209b7);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 25px;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      animation: slideIn 0.3s ease;
+      display: none;
+    }
+    
+    .install-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+    
+    @keyframes slideIn {
+      from { transform: translateY(100px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    @keyframes slideOut {
+      from { transform: translateY(0); opacity: 1; }
+      to { transform: translateY(100px); opacity: 0; }
+    }
   </style>
 </head>
 
 <body data-theme="light" data-motif="default">
   <!-- Notification -->
   <div id="notification" class="notification"></div>
+
+  <!-- Install Button -->
+  <button class="install-btn" id="installButton" onclick="installPWA()">
+    <i class="fas fa-download"></i> Install App
+  </button>
 
   <div class="container">
     <!-- Header -->
@@ -207,10 +256,9 @@
       <p>© 2026 <span class="developer">School Manager</span> — Sistem Informasi Sekolah Terintegrasi</p>
       <p>Dikembangkan oleh <span class="developer">Rizqi</span> | v3.0</p>
       <p class="current-motif">Motif aktif: <span id="currentMotif">Default</span></p>
-      <p class="live-demo">
-        <i class="fas fa-globe"></i> 
-        <a href="https://rizqitsaqif.github.io/school-manager/" target="_blank" rel="noopener">Live Demo</a> | 
-        <a href="https://github.com/rizqitsaqif/school-manager" target="_blank" rel="noopener">Source Code</a>
+      <p class="pwa-info">
+        <i class="fas fa-mobile-alt"></i> 
+        <span id="pwaStatus">Aplikasi web - Install untuk pengalaman lebih baik</span>
       </p>
     </footer>
   </div>
@@ -219,15 +267,111 @@
   <script src="script.js"></script>
   <script src="theme.js"></script>
   
-  <!-- Initialize -->
+  <!-- PWA Script -->
   <script>
+    // PWA Variables
+    let deferredPrompt;
+    const installButton = document.getElementById('installButton');
+    const pwaStatus = document.getElementById('pwaStatus');
+    
+    // Check if running as PWA
+    function isRunningAsPWA() {
+      return window.matchMedia('(display-mode: standalone)').matches || 
+             window.navigator.standalone === true;
+    }
+    
+    // Update PWA status display
+    function updatePWAStatus() {
+      if (isRunningAsPWA()) {
+        pwaStatus.textContent = '📱 Aplikasi terinstall - Mode standalone';
+        if (installButton) installButton.style.display = 'none';
+      } else {
+        pwaStatus.textContent = '📲 Bisa diinstall sebagai aplikasi';
+      }
+    }
+    
+    // Listen for install prompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Show install button after 3 seconds
+      setTimeout(() => {
+        if (installButton && !isRunningAsPWA()) {
+          installButton.style.display = 'flex';
+          
+          // Auto hide after 15 seconds
+          setTimeout(() => {
+            if (installButton.style.display !== 'none') {
+              installButton.style.animation = 'slideOut 0.3s ease';
+              setTimeout(() => {
+                installButton.style.display = 'none';
+              }, 300);
+            }
+          }, 15000);
+        }
+      }, 3000);
+    });
+    
+    // Install PWA function
+    function installPWA() {
+      if (!deferredPrompt) return;
+      
+      deferredPrompt.prompt();
+      
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log('User installed PWA');
+          if (typeof showNotification === 'function') {
+            showNotification('🎉 Aplikasi berhasil diinstall!', 'success');
+          }
+          updatePWAStatus();
+        } else {
+          console.log('User dismissed install');
+        }
+        deferredPrompt = null;
+        if (installButton) installButton.style.display = 'none';
+      });
+    }
+    
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js')
+          .then(registration => {
+            console.log('ServiceWorker registered:', registration);
+          })
+          .catch(error => {
+            console.log('ServiceWorker registration failed:', error);
+          });
+      });
+    }
+    
+    // Initialize
     document.addEventListener('DOMContentLoaded', function() {
+      // Update PWA status
+      updatePWAStatus();
+      
       // Show welcome message
       setTimeout(() => {
         if (typeof showNotification === 'function') {
-          showNotification('🎉 Selamat datang di School Manager!', 'success');
+          if (isRunningAsPWA()) {
+            showNotification('🎉 Selamat datang di School Manager App!', 'success');
+          } else {
+            showNotification('🎉 Selamat datang di School Manager!', 'success');
+          }
         }
       }, 1000);
+      
+      // Keyboard shortcut for install (Ctrl+I)
+      document.addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key === 'i') {
+          e.preventDefault();
+          if (installButton && installButton.style.display !== 'none') {
+            installPWA();
+          }
+        }
+      });
     });
   </script>
 </body>
