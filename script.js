@@ -2,7 +2,7 @@
 // SCHOOL MANAGER v3.0 - Main Script
 // ============================================
 
-// Data sekolah dengan contoh data awal
+// Data sekolah
 let dataSekolah = [
   { tipe: "guru", nama: "Pak Budi" },
   { tipe: "guru", nama: "Bu Siti" },
@@ -12,7 +12,7 @@ let dataSekolah = [
   { tipe: "ekskul", nama: "Paskibra" }
 ];
 
-// ============== LOCAL STORAGE FUNCTIONS ==============
+// ============== LOCAL STORAGE ==============
 function loadDataFromStorage() {
   try {
     const savedData = localStorage.getItem('schoolData');
@@ -44,7 +44,6 @@ function toggleDarkMode() {
   body.setAttribute('data-theme', newTheme);
   localStorage.setItem('theme', newTheme);
   
-  // Update toggle button
   const themeToggle = document.querySelector('.theme-toggle');
   if (themeToggle) {
     const icon = themeToggle.querySelector('i');
@@ -66,7 +65,6 @@ function loadTheme() {
   const savedTheme = localStorage.getItem('theme') || 'light';
   document.body.setAttribute('data-theme', savedTheme);
   
-  // Set toggle button state
   const themeToggle = document.querySelector('.theme-toggle');
   if (themeToggle) {
     const icon = themeToggle.querySelector('i');
@@ -94,13 +92,11 @@ function changeMotif(motif) {
   document.body.setAttribute('data-motif', motif);
   localStorage.setItem('motif', motif);
   
-  // Update current motif display
   const currentMotifEl = document.getElementById('currentMotif');
   if (currentMotifEl) {
     currentMotifEl.textContent = motif.charAt(0).toUpperCase() + motif.slice(1);
   }
   
-  // Close dropdown
   const dropdown = document.querySelector('.motif-dropdown');
   if (dropdown) {
     dropdown.classList.remove('active');
@@ -113,27 +109,23 @@ function loadMotif() {
   const savedMotif = localStorage.getItem('motif') || 'default';
   document.body.setAttribute('data-motif', savedMotif);
   
-  // Update current motif display
   const currentMotifEl = document.getElementById('currentMotif');
   if (currentMotifEl) {
     currentMotifEl.textContent = savedMotif.charAt(0).toUpperCase() + savedMotif.slice(1);
   }
 }
 
-// ============== NOTIFICATION SYSTEM ==============
+// ============== NOTIFICATION ==============
 function showNotification(message, type = 'success', duration = 3000) {
-  // Remove existing notification
   const oldNotification = document.getElementById('notification');
   if (oldNotification) {
     oldNotification.remove();
   }
   
-  // Create new notification
   const notification = document.createElement('div');
   notification.id = 'notification';
   notification.className = `notification ${type}`;
   
-  // Add icon based on type
   let icon = 'fas fa-check-circle';
   if (type === 'error') icon = 'fas fa-exclamation-circle';
   if (type === 'warning') icon = 'fas fa-exclamation-triangle';
@@ -142,12 +134,10 @@ function showNotification(message, type = 'success', duration = 3000) {
   notification.innerHTML = `<i class="${icon}"></i> ${message}`;
   document.body.appendChild(notification);
   
-  // Show notification
   setTimeout(() => {
     notification.classList.add('show');
   }, 10);
   
-  // Auto hide after duration
   setTimeout(() => {
     notification.classList.remove('show');
     setTimeout(() => {
@@ -157,7 +147,6 @@ function showNotification(message, type = 'success', duration = 3000) {
     }, 300);
   }, duration);
   
-  // Allow clicking to dismiss
   notification.addEventListener('click', () => {
     notification.classList.remove('show');
     setTimeout(() => {
@@ -168,7 +157,7 @@ function showNotification(message, type = 'success', duration = 3000) {
   });
 }
 
-// ============== STATS FUNCTIONS ==============
+// ============== STATS ==============
 function updateStats() {
   try {
     const mapelCount = dataSekolah.filter(d => d.tipe === 'mapel').length;
@@ -176,21 +165,16 @@ function updateStats() {
     const ekskulCount = dataSekolah.filter(d => d.tipe === 'ekskul').length;
     const totalCount = dataSekolah.length;
     
-    const mapelEl = document.getElementById('mapelCount');
-    const guruEl = document.getElementById('guruCount');
-    const ekskulEl = document.getElementById('ekskulCount');
-    const totalEl = document.getElementById('totalCount');
-    
-    if (mapelEl) mapelEl.textContent = mapelCount;
-    if (guruEl) guruEl.textContent = guruCount;
-    if (ekskulEl) ekskulEl.textContent = ekskulCount;
-    if (totalEl) totalEl.textContent = totalCount;
+    document.getElementById('mapelCount').textContent = mapelCount;
+    document.getElementById('guruCount').textContent = guruCount;
+    document.getElementById('ekskulCount').textContent = ekskulCount;
+    document.getElementById('totalCount').textContent = totalCount;
   } catch (e) {
     console.error('Error updating stats:', e);
   }
 }
 
-// ============== DATA DISPLAY FUNCTIONS ==============
+// ============== DATA DISPLAY ==============
 function showAllData() {
   const results = document.getElementById('results');
   if (!results) return;
@@ -222,7 +206,7 @@ function showAllData() {
                'Ekstrakurikuler'}</p>
         </div>
       </div>
-      <button class="btn btn-danger" onclick="deleteData(${index})" aria-label="Hapus data">
+      <button class="btn btn-danger" onclick="deleteData(${index})" title="Hapus">
         <i class="fas fa-trash"></i>
       </button>
     </div>
@@ -284,7 +268,7 @@ function searchData() {
                  'Ekstrakurikuler'}</p>
           </div>
         </div>
-        <button class="btn btn-danger" onclick="deleteData(${index})" aria-label="Hapus data">
+        <button class="btn btn-danger" onclick="deleteData(${index})" title="Hapus">
           <i class="fas fa-trash"></i>
         </button>
       </div>
@@ -312,7 +296,7 @@ function addData() {
     return;
   }
   
-  // Check for duplicates
+  // Check duplicate
   const isDuplicate = dataSekolah.some(d => 
     d.tipe === tipe && d.nama.toLowerCase() === nama.toLowerCase()
   );
@@ -334,7 +318,7 @@ function addData() {
   // Update display
   showAllData();
   
-  // Show success message
+  // Show success
   const tipeText = tipe === 'mapel' ? 'Mata Pelajaran' : 
                   tipe === 'guru' ? 'Guru' : 
                   'Ekstrakurikuler';
@@ -355,10 +339,8 @@ function deleteData(index) {
   dataSekolah.splice(index, 1);
   saveDataToStorage();
   
-  // Update display
   showAllData();
   
-  // Show success message
   const tipeText = deletedItem.tipe === 'mapel' ? 'Mata Pelajaran' : 
                   deletedItem.tipe === 'guru' ? 'Guru' : 
                   'Ekstrakurikuler';
@@ -478,12 +460,6 @@ function init() {
           searchInput.focus();
         }
       }
-      
-      // Ctrl + I for Install (handled in HTML)
-      if (e.ctrlKey && e.key === 'i') {
-        e.preventDefault();
-        // Install button will handle this if visible
-      }
     });
     
     // Close dropdowns when clicking outside
@@ -492,19 +468,7 @@ function init() {
         closeAllDropdowns();
       }
     });
-    
-    // Show welcome message
-    setTimeout(() => {
-      showNotification('🎉 Selamat datang di School Manager v3.0!', 'success');
-    }, 1000);
   });
-}
-
-// ============== PWA INSTALLATION ==============
-function installPWA() {
-  // This function is handled by the PWA script in index.html
-  // It will be triggered by the install button
-  console.log('Install PWA function called');
 }
 
 // Initialize the application

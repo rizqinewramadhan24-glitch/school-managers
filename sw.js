@@ -1,23 +1,46 @@
-// Simple Service Worker
-const CACHE_NAME = 'school-app-v1';
+// Service Worker for PWA
+const CACHE_NAME = 'school-manager-v3';
 const urlsToCache = [
-  '/school-manager/',
-  '/school-manager/index.html',
-  '/school-manager/style.css',
-  '/school-manager/script.js',
-  '/school-manager/theme.js'
+  './',
+  './index.html',
+  './landing.html',
+  './style.css',
+  './script.js',
+  './theme.js',
+  './manifest.json'
 ];
 
+// Install event
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(urlsToCache))
+      .then(cache => {
+        return cache.addAll(urlsToCache);
+      })
   );
 });
 
+// Fetch event
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
-      .then(response => response || fetch(event.request))
+      .then(response => {
+        return response || fetch(event.request);
+      })
+  );
+});
+
+// Activate event
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheName !== CACHE_NAME) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });

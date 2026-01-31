@@ -4,62 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- ===================== SEO META TAGS ===================== -->
-  <title>🏫 School Manager | Sistem Informasi Sekolah Modern</title>
-  <meta name="description" content="Aplikasi web gratis untuk mengelola data sekolah. Fitur: dark mode, 6 tema pilihan, pencarian instan, penyimpanan lokal. Kelola guru, mapel, dan ekstrakurikuler.">
-  <meta name="keywords" content="sistem informasi sekolah, school manager, aplikasi sekolah, manajemen sekolah, web app sekolah, dark mode, javascript, html, css, guru, mata pelajaran, ekstrakurikuler">
+  <title>🏫 School Manager | Sistem Informasi Sekolah</title>
+  <meta name="description" content="Aplikasi web untuk mengelola data sekolah dengan dark mode, 6 tema, dan penyimpanan lokal">
   <meta name="author" content="Rizqi">
-  <meta name="robots" content="index, follow">
   
-  <!-- ===================== PWA META TAGS ===================== -->
+  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#4361ee">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="School Manager">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
   
-  <!-- Open Graph untuk Facebook/WhatsApp/LinkedIn -->
-  <meta property="og:title" content="🏫 School Manager | Sistem Informasi Sekolah Modern">
-  <meta property="og:description" content="Aplikasi web gratis untuk mengelola data sekolah dengan fitur dark mode & 6 tema pilihan">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://rizqinewramadhan24.github.io/school-manager/">
-  <meta property="og:image" content="https://raw.githubusercontent.com/rizqinewramadhan24/school-manager/main/thumbnail.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:site_name" content="School Manager">
-  
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="🏫 School Manager">
-  <meta name="twitter:description" content="Sistem informasi sekolah modern dengan dark mode dan 6 tema">
-  <meta name="twitter:image" content="https://raw.githubusercontent.com/rizqinewramadhan24/school-manager/main/thumbnail.png">
-  
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
-  
-  <!-- ===================== STYLES & FONTS ===================== -->
+  <!-- Styles & Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
   
   <style>
-    /* Inline untuk loading cepat */
-    .loading {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,.3);
-      border-radius: 50%;
-      border-top-color: #fff;
-      animation: spin 1s ease-in-out infinite;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
-    /* Install Button Styles */
+    /* Install Button */
     .install-btn {
       position: fixed;
       bottom: 80px;
@@ -76,71 +35,12 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      animation: slideIn 0.3s ease;
       display: none;
     }
     
     .install-btn:hover {
       transform: translateY(-2px);
       box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-    }
-    
-    @keyframes slideIn {
-      from { transform: translateY(100px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    
-    @keyframes slideOut {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(100px); opacity: 0; }
-    }
-    
-    /* Footer Navigation Styles */
-    .footer-nav {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-    
-    .footer-link {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      background: rgba(67, 97, 238, 0.1);
-      border-radius: 50px;
-      color: #4361ee;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      border: 2px solid transparent;
-    }
-    
-    .footer-link:hover {
-      background: #4361ee;
-      color: white;
-      transform: translateY(-2px);
-      border-color: #4361ee;
-    }
-    
-    .footer-link i {
-      font-size: 1.1em;
-    }
-    
-    /* Responsive Footer */
-    @media (max-width: 768px) {
-      .footer-nav {
-        flex-direction: column;
-        align-items: center;
-        gap: 10px;
-      }
-      
-      .footer-link {
-        width: 80%;
-        justify-content: center;
-      }
     }
   </style>
 </head>
@@ -158,7 +58,7 @@
     <!-- Header -->
     <header>
       <div class="logo-container">
-        <div class="logo" aria-label="Logo School Manager">
+        <div class="logo">
           <i class="fas fa-school"></i>
         </div>
         <div class="logo-text">
@@ -169,40 +69,40 @@
       
       <!-- Theme Selector -->
       <div class="theme-selector-container">
-        <div class="theme-toggle" onclick="toggleDarkMode()" aria-label="Toggle dark mode">
+        <div class="theme-toggle" onclick="toggleDarkMode()">
           <i class="fas fa-moon"></i>
           <span>Dark Mode</span>
         </div>
         
         <div class="motif-dropdown">
-          <button class="motif-toggle" onclick="toggleMotifDropdown()" aria-label="Pilih motif tema">
+          <button class="motif-toggle" onclick="toggleMotifDropdown()">
             <i class="fas fa-palette"></i>
             <span>Pilih Motif</span>
             <i class="fas fa-chevron-down"></i>
           </button>
           
           <div class="motif-options">
-            <div class="motif-option" onclick="changeMotif('default')" aria-label="Motif default">
+            <div class="motif-option" onclick="changeMotif('default')">
               <div class="motif-preview default-motif"></div>
               <span>Default</span>
             </div>
-            <div class="motif-option" onclick="changeMotif('gradient')" aria-label="Motif gradient">
+            <div class="motif-option" onclick="changeMotif('gradient')">
               <div class="motif-preview gradient-motif"></div>
               <span>Gradient</span>
             </div>
-            <div class="motif-option" onclick="changeMotif('education')" aria-label="Motif pendidikan">
+            <div class="motif-option" onclick="changeMotif('education')">
               <div class="motif-preview education-motif"></div>
               <span>Education</span>
             </div>
-            <div class="motif-option" onclick="changeMotif('pattern')" aria-label="Motif pattern">
+            <div class="motif-option" onclick="changeMotif('pattern')">
               <div class="motif-preview pattern-motif"></div>
               <span>Pattern</span>
             </div>
-            <div class="motif-option" onclick="changeMotif('glass')" aria-label="Motif glassmorphism">
+            <div class="motif-option" onclick="changeMotif('glass')">
               <div class="motif-preview glass-motif"></div>
               <span>Glassmorphism</span>
             </div>
-            <div class="motif-option" onclick="changeMotif('nature')" aria-label="Motif alam">
+            <div class="motif-option" onclick="changeMotif('nature')">
               <div class="motif-preview nature-motif"></div>
               <span>Nature</span>
             </div>
@@ -213,23 +113,23 @@
 
     <!-- Stats -->
     <div class="stats-container">
-      <div class="stat-card mapel" role="region" aria-label="Statistik mata pelajaran">
-        <i class="fas fa-book-open" aria-hidden="true"></i>
+      <div class="stat-card mapel">
+        <i class="fas fa-book-open"></i>
         <h3 id="mapelCount">0</h3>
         <p>Mata Pelajaran</p>
       </div>
-      <div class="stat-card guru" role="region" aria-label="Statistik guru">
-        <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+      <div class="stat-card guru">
+        <i class="fas fa-chalkboard-teacher"></i>
         <h3 id="guruCount">0</h3>
         <p>Guru</p>
       </div>
-      <div class="stat-card ekskul" role="region" aria-label="Statistik ekstrakurikuler">
-        <i class="fas fa-futbol" aria-hidden="true"></i>
+      <div class="stat-card ekskul">
+        <i class="fas fa-futbol"></i>
         <h3 id="ekskulCount">0</h3>
         <p>Ekstrakurikuler</p>
       </div>
-      <div class="stat-card total" role="region" aria-label="Total data">
-        <i class="fas fa-database" aria-hidden="true"></i>
+      <div class="stat-card total">
+        <i class="fas fa-database"></i>
         <h3 id="totalCount">0</h3>
         <p>Total Data</p>
       </div>
@@ -238,44 +138,44 @@
     <!-- Main Content -->
     <main class="main-content">
       <!-- Search Card -->
-      <section class="card" aria-labelledby="search-title">
+      <section class="card">
         <div class="card-header">
-          <i class="fas fa-search" aria-hidden="true"></i>
-          <h3 id="search-title">Pencarian Data</h3>
+          <i class="fas fa-search"></i>
+          <h3>Pencarian Data</h3>
         </div>
         
         <div class="search-box">
-          <i class="fas fa-search" aria-hidden="true"></i>
-          <input type="text" id="searchInput" placeholder="Cari mapel, guru, atau ekskul..." aria-label="Kotak pencarian data">
+          <i class="fas fa-search"></i>
+          <input type="text" id="searchInput" placeholder="Cari mapel, guru, atau ekskul...">
         </div>
         
         <div class="button-group">
-          <button class="btn btn-primary" onclick="searchData()" aria-label="Cari data">
+          <button class="btn btn-primary" onclick="searchData()">
             <i class="fas fa-search"></i> Cari
           </button>
-          <button class="btn btn-secondary" onclick="showAllData()" aria-label="Tampilkan semua data">
+          <button class="btn btn-secondary" onclick="showAllData()">
             <i class="fas fa-list"></i> Lihat Semua
           </button>
-          <button class="btn btn-danger" onclick="clearAllData()" aria-label="Hapus semua data">
+          <button class="btn btn-danger" onclick="clearAllData()">
             <i class="fas fa-trash"></i> Hapus Semua
           </button>
         </div>
         
-        <div id="results" class="results-container" role="region" aria-live="polite">
-          <!-- Results populated by JS -->
+        <div id="results" class="results-container">
+          <!-- Results akan diisi oleh JS -->
         </div>
       </section>
 
       <!-- Add Data Card -->
-      <section class="card" aria-labelledby="add-data-title">
+      <section class="card">
         <div class="card-header">
-          <i class="fas fa-plus-circle" aria-hidden="true"></i>
-          <h3 id="add-data-title">Tambah Data Baru</h3>
+          <i class="fas fa-plus-circle"></i>
+          <h3>Tambah Data Baru</h3>
         </div>
         
         <div class="form-group">
           <label for="tipeInput">Jenis Data</label>
-          <select id="tipeInput" aria-label="Pilih jenis data">
+          <select id="tipeInput">
             <option value="">Pilih jenis data</option>
             <option value="mapel">Mata Pelajaran</option>
             <option value="guru">Guru</option>
@@ -285,22 +185,22 @@
         
         <div class="form-group">
           <label for="namaInput">Nama</label>
-          <input type="text" id="namaInput" placeholder="Masukkan nama data" aria-label="Nama data">
+          <input type="text" id="namaInput" placeholder="Masukkan nama data">
         </div>
         
-        <button class="btn-add" onclick="addData()" aria-label="Tambah data baru">
+        <button class="btn-add" onclick="addData()">
           <i class="fas fa-plus"></i> Tambah Data
         </button>
         
-        <div class="info-note" role="note">
-          <i class="fas fa-info-circle" aria-hidden="true"></i>
+        <div class="info-note">
+          <i class="fas fa-info-circle"></i>
           <p>Data akan disimpan otomatis di browser Anda</p>
         </div>
       </section>
     </main>
 
     <!-- Footer -->
-    <footer role="contentinfo">
+    <footer>
       <!-- Navigation Links -->
       <div class="footer-nav">
         <a href="landing.html" class="footer-link">
@@ -317,7 +217,7 @@
         </a>
       </div>
       
-      <p>© 2026 <span class="developer">School Manager</span> — Sistem Informasi Sekolah Terintegrasi</p>
+      <p>© 2026 <span class="developer">School Manager</span> — Sistem Informasi Sekolah</p>
       <p>Dikembangkan oleh <span class="developer">Rizqi</span> | v3.0</p>
       <p class="current-motif">Motif aktif: <span id="currentMotif">Default</span></p>
       <p class="pwa-info">
@@ -327,40 +227,16 @@
     </footer>
   </div>
 
-  <!-- JavaScript Files -->
+  <!-- JavaScript -->
   <script src="script.js"></script>
   <script src="theme.js"></script>
   
-  <!-- PWA Script & Additional Functions -->
+  <!-- PWA Script -->
   <script>
     // PWA Variables
     let deferredPrompt;
     const installButton = document.getElementById('installButton');
     const pwaStatus = document.getElementById('pwaStatus');
-    
-    // Function to show help
-    function showHelp() {
-      if (typeof showNotification === 'function') {
-        showNotification(`
-          <h3>🆘 Bantuan School Manager</h3>
-          <p><strong>Fitur Utama:</strong></p>
-          <ul style="text-align: left; margin: 10px 0;">
-            <li>📊 Tambah data mata pelajaran, guru, dan ekskul</li>
-            <li>🔍 Pencarian instan dengan kata kunci</li>
-            <li>🌙 Dark/Light mode toggle</li>
-            <li>🎨 6 pilihan tema motif</li>
-            <li>💾 Data tersimpan otomatis di browser</li>
-            <li>📱 Install sebagai aplikasi (PWA)</li>
-          </ul>
-          <p><strong>Navigasi:</strong></p>
-          <p>• Klik "Portfolio Page" untuk kembali ke halaman portfolio</p>
-          <p>• Gunakan shortcut <kbd>Ctrl+S</kbd> untuk mencari</p>
-          <p>• <kbd>Ctrl+H</kbd> untuk bantuan ini</p>
-        `, 'info', 8000);
-      } else {
-        alert('🆘 Bantuan School Manager\n\nFitur:\n• Tambah data mapel, guru, ekskul\n• Pencarian instan\n• Dark/Light mode\n• 6 tema pilihan\n• Data tersimpan di browser\n• Install sebagai PWA\n\nNavigasi:\n• Klik "Portfolio Page" untuk kembali');
-      }
-    }
     
     // Check if running as PWA
     function isRunningAsPWA() {
@@ -368,7 +244,7 @@
              window.navigator.standalone === true;
     }
     
-    // Update PWA status display
+    // Update PWA status
     function updatePWAStatus() {
       if (isRunningAsPWA()) {
         pwaStatus.textContent = '📱 Aplikasi terinstall - Mode standalone';
@@ -391,10 +267,7 @@
           // Auto hide after 15 seconds
           setTimeout(() => {
             if (installButton.style.display !== 'none') {
-              installButton.style.animation = 'slideOut 0.3s ease';
-              setTimeout(() => {
-                installButton.style.display = 'none';
-              }, 300);
+              installButton.style.display = 'none';
             }
           }, 15000);
         }
@@ -410,12 +283,8 @@
       deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {
           console.log('User installed PWA');
-          if (typeof showNotification === 'function') {
-            showNotification('🎉 Aplikasi berhasil diinstall!', 'success');
-          }
+          showNotification('🎉 Aplikasi berhasil diinstall!', 'success');
           updatePWAStatus();
-        } else {
-          console.log('User dismissed install');
         }
         deferredPrompt = null;
         if (installButton) installButton.style.display = 'none';
@@ -427,7 +296,7 @@
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('sw.js')
           .then(registration => {
-            console.log('ServiceWorker registered:', registration);
+            console.log('ServiceWorker registered');
           })
           .catch(error => {
             console.log('ServiceWorker registration failed:', error);
@@ -437,29 +306,22 @@
     
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
-      // Update PWA status
       updatePWAStatus();
       
-      // Show welcome message
       setTimeout(() => {
-        if (typeof showNotification === 'function') {
-          if (isRunningAsPWA()) {
-            showNotification('🎉 Selamat datang di School Manager App!', 'success');
-          } else {
-            showNotification('🎉 Selamat datang di School Manager!', 'success');
-          }
+        if (isRunningAsPWA()) {
+          showNotification('🎉 Selamat datang di School Manager App!', 'success');
+        } else {
+          showNotification('🎉 Selamat datang di School Manager!', 'success');
         }
       }, 1000);
       
       // Keyboard shortcuts
       document.addEventListener('keydown', function(e) {
-        // Ctrl+H for Help
         if (e.ctrlKey && e.key === 'h') {
           e.preventDefault();
           showHelp();
         }
-        
-        // Ctrl+I for Install (if available)
         if (e.ctrlKey && e.key === 'i') {
           e.preventDefault();
           if (installButton && installButton.style.display !== 'none') {

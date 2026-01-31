@@ -1,5 +1,5 @@
 /* ============================================
-   SCHOOL MANAGER v3.0 - WITH MOTIF SELECTOR
+   SCHOOL MANAGER v3.0 - STYLES
    ============================================ */
 
 /* Reset & Base */
@@ -44,7 +44,7 @@
   --transition: all 0.3s ease;
 }
 
-/* Dark Mode Base */
+/* Dark Mode */
 [data-theme="dark"] {
   --bg-primary: #0f172a;
   --bg-secondary: #1e293b;
@@ -99,7 +99,7 @@
   --bg-primary: linear-gradient(135deg, #1a3c2e 0%, #2d4d1e 100%);
 }
 
-/* Apply Background */
+/* Body */
 body {
   background: var(--bg-primary);
   color: var(--text-primary);
@@ -167,14 +167,13 @@ header {
   font-size: 0.875rem;
 }
 
-/* Theme Selector Container */
+/* Theme Selector */
 .theme-selector-container {
   display: flex;
   gap: 1rem;
   align-items: center;
 }
 
-/* Dark/Light Toggle */
 .theme-toggle {
   display: flex;
   align-items: center;
@@ -235,7 +234,6 @@ header {
   transform: rotate(180deg);
 }
 
-/* Motif Options */
 .motif-options {
   position: absolute;
   top: 100%;
@@ -503,9 +501,13 @@ header {
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition);
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  text-decoration: none;
+}
+
+.button-group .btn {
   flex: 1;
   min-width: 120px;
   justify-content: center;
@@ -610,6 +612,7 @@ header {
   justify-content: center;
   color: white;
   font-size: 1rem;
+  flex-shrink: 0;
 }
 
 .result-icon.mapel {
@@ -633,6 +636,25 @@ header {
 .result-text p {
   font-size: 0.8125rem;
   color: var(--text-secondary);
+}
+
+/* FIX DELETE BUTTON - TIDAK LEBAR */
+.result-item .btn-danger {
+  flex: 0 0 auto !important;
+  min-width: 40px !important;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 0 !important;
+  margin-left: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-item .btn-danger i {
+  margin: 0;
+  font-size: 0.9rem;
 }
 
 /* Form */
@@ -867,42 +889,6 @@ footer p {
   line-height: 1.5;
 }
 
-/* Install Button */
-.install-btn {
-  position: fixed;
-  bottom: 80px;
-  right: 20px;
-  background: linear-gradient(135deg, var(--primary), var(--secondary));
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 25px;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: var(--shadow-lg);
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  animation: slideIn 0.3s ease;
-  display: none;
-}
-
-.install-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-xl);
-}
-
-@keyframes slideIn {
-  from { transform: translateY(100px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes slideOut {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(100px); opacity: 0; }
-}
-
 /* Responsive */
 @media (max-width: 768px) {
   header {
@@ -951,7 +937,7 @@ footer p {
     flex-direction: column;
   }
   
-  .btn {
+  .button-group .btn {
     min-width: 100%;
   }
 }
@@ -973,5 +959,10 @@ footer p {
     left: 15px;
     right: 15px;
     max-width: none;
+  }
+  
+  .result-item .btn-danger {
+    width: 36px !important;
+    height: 36px !important;
   }
 }
