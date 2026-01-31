@@ -19,29 +19,47 @@
     <link rel="apple-touch-icon" href="./books.png">
     <link rel="shortcut icon" href="./books.png" type="image/x-icon">
     <!-- EMERGENCY FAVICON SCRIPT -->
-    <script>
-        // Force favicon on load
-        document.addEventListener('DOMContentLoaded', function() {
-            const iconUrl = 'https://cdn-icons-png.flaticon.com/512/2232/2232688.png';
+    <!-- EMERGENCY FAVICON SCRIPT - LANDING PAGE -->
+<script>
+    // Force favicon on load - LANDING PAGE (books.png)
+    document.addEventListener('DOMContentLoaded', function() {
+        const iconUrl = './books.png?v=' + Date.now();
+        
+        // Jangan hapus dulu, cek dulu
+        const existingFavicon = document.querySelector('link[rel="icon"][href*="books.png"]');
+        
+        if (!existingFavicon) {
+            // Hanya hapus yang bukan books.png
+            document.querySelectorAll('link[rel*="icon"]').forEach(link => {
+                if (!link.href.includes('books.png')) {
+                    link.remove();
+                }
+            });
             
-            // Remove any existing favicons
-            document.querySelectorAll('link[rel*="icon"]').forEach(link => link.remove());
-            
-            // Create new ones
+            // Create favicon
             const favicon = document.createElement('link');
             favicon.rel = 'icon';
             favicon.href = iconUrl;
             favicon.type = 'image/png';
             document.head.appendChild(favicon);
             
+            // Create apple touch icon
+            const appleIcon = document.createElement('link');
+            appleIcon.rel = 'apple-touch-icon';
+            appleIcon.href = iconUrl;
+            document.head.appendChild(appleIcon);
+            
+            // Create shortcut
             const shortcut = document.createElement('link');
             shortcut.rel = 'shortcut icon';
             shortcut.href = iconUrl;
+            shortcut.type = 'image/x-icon';
             document.head.appendChild(shortcut);
             
-            console.log('✅ Favicon forced: ' + iconUrl);
-        });
-    </script>
+            console.log('📚 Landing favicon forced:', iconUrl);
+        }
+    });
+</script>
     
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
