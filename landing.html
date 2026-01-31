@@ -10,6 +10,11 @@
     <meta name="keywords" content="sistem informasi sekolah, school manager, aplikasi sekolah, manajemen sekolah">
     <meta name="author" content="Rizqi">
     
+    <!-- PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4361ee">
+    <meta name="mobile-web-app-capable" content="yes">
+    
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -116,6 +121,8 @@
             transition: var(--transition);
             border: none;
             cursor: pointer;
+            min-width: 200px;
+            justify-content: center;
         }
         
         .btn-primary {
@@ -218,6 +225,56 @@
             margin-top: 10px;
         }
         
+        /* PWA Install Banner */
+        .pwa-banner {
+            background: linear-gradient(135deg, #4361ee, #7209b7);
+            color: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            margin: 30px auto;
+            max-width: 800px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: var(--shadow);
+        }
+        
+        .pwa-banner-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .pwa-banner h3 {
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+        
+        .pwa-banner p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+        
+        .install-btn {
+            background: white;
+            color: #4361ee;
+            border: none;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+        }
+        
+        .install-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
         /* Footer */
         footer {
             background: var(--dark);
@@ -251,6 +308,30 @@
             margin-top: 20px;
         }
         
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: var(--primary);
+            color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(120px);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             h1 {
@@ -268,16 +349,44 @@
             
             .btn {
                 width: 100%;
-                justify-content: center;
+                max-width: 300px;
             }
             
             .features {
                 grid-template-columns: 1fr;
             }
+            
+            .pwa-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero h2 {
+                font-size: 1.8rem;
+            }
+            
+            .btn {
+                padding: 14px 20px;
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Notification -->
+    <div id="notification" class="notification" style="display: none;"></div>
+
     <!-- Header -->
     <header>
         <div class="container">
@@ -299,16 +408,30 @@
             </p>
             
             <div class="cta-buttons">
-                <a href="https://rizqinewramadhan24.github.io/school-manager/" class="btn btn-primary" target="_blank">
-                    <i class="fas fa-rocket"></i> Live Demo
+                <a href="index.html" class="btn btn-primary">
+                    <i class="fas fa-rocket"></i> Live Demo (Web)
                 </a>
-                <a href="https://github.com/rizqinewramadhan24/school-manager" class="btn btn-secondary" target="_blank">
-                    <i class="fab fa-github"></i> Source Code
-                </a>
+                <button class="btn btn-secondary" onclick="installPWA()" id="installButton">
+                    <i class="fas fa-download"></i> Install App
+                </button>
                 <a href="#features" class="btn btn-secondary">
                     <i class="fas fa-star"></i> Fitur Unggulan
                 </a>
             </div>
+        </div>
+    </section>
+
+    <!-- PWA Install Banner -->
+    <section class="container">
+        <div class="pwa-banner">
+            <div class="pwa-banner-content">
+                <h3>📱 Install sebagai Aplikasi</h3>
+                <p>Instal School Manager di perangkat Anda untuk pengalaman seperti aplikasi native. 
+                   Buka offline, lebih cepat, dan akses langsung dari home screen.</p>
+            </div>
+            <button class="install-btn" onclick="installPWA()">
+                <i class="fas fa-download"></i> Install Sekarang
+            </button>
         </div>
     </section>
 
@@ -357,10 +480,10 @@
             
             <div class="feature-card">
                 <div class="feature-icon">
-                    <i class="fas fa-download"></i>
+                    <i class="fas fa-bolt"></i>
                 </div>
-                <h3>Installable App</h3>
-                <p>Instal sebagai aplikasi native di perangkat mobile Anda (PWA).</p>
+                <h3>Offline Support</h3>
+                <p>Gunakan aplikasi tanpa koneksi internet setelah diinstall (PWA).</p>
             </div>
         </div>
     </section>
@@ -430,14 +553,14 @@
                 langsung bisa digunakan di browser Anda.
             </p>
             <div class="cta-buttons">
-                <a href="https://rizqinewramadhan24.github.io/school-manager/" class="btn btn-primary" target="_blank" 
+                <a href="index.html" class="btn btn-primary" 
                    style="background: white; color: #4361ee;">
-                    <i class="fas fa-play-circle"></i> Coba Sekarang
+                    <i class="fas fa-play-circle"></i> Coba Sekarang (Web)
                 </a>
-                <a href="https://github.com/rizqinewramadhan24/school-manager" class="btn btn-secondary" target="_blank"
+                <button class="btn btn-secondary" onclick="installPWA()"
                    style="background: transparent; border: 2px solid white; color: white;">
-                    <i class="fab fa-github"></i> Lihat Kode
-                </a>
+                    <i class="fas fa-download"></i> Install Aplikasi
+                </button>
             </div>
         </div>
     </section>
@@ -449,7 +572,7 @@
             <p>Sistem Informasi Sekolah Modern</p>
             
             <div class="footer-links">
-                <a href="https://rizqinewramadhan24.github.io/school-manager/" target="_blank">
+                <a href="index.html">
                     <i class="fas fa-external-link-alt"></i> Live Demo
                 </a>
                 <a href="https://github.com/rizqinewramadhan24/school-manager" target="_blank">
@@ -457,9 +580,6 @@
                 </a>
                 <a href="#features">
                     <i class="fas fa-star"></i> Fitur
-                </a>
-                <a href="#">
-                    <i class="fas fa-info-circle"></i> Tentang
                 </a>
             </div>
             
@@ -473,7 +593,88 @@
     </footer>
 
     <script>
-        // Smooth scroll for anchor links
+        // ============== PWA INSTALL FUNCTION ==============
+        let deferredPrompt;
+        let installButton = document.getElementById('installButton');
+        let installButtons = document.querySelectorAll('[onclick="installPWA()"]');
+        
+        // Listen for beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Show install buttons
+            installButtons.forEach(btn => {
+                btn.style.display = 'flex';
+            });
+            
+            console.log('PWA install ready');
+        });
+        
+        // Install PWA function
+        function installPWA() {
+            if (!deferredPrompt) {
+                showNotification('Aplikasi sudah terinstall atau tidak support PWA', 'info');
+                window.location.href = 'index.html'; // Fallback ke web
+                return;
+            }
+            
+            deferredPrompt.prompt();
+            
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    showNotification('🎉 Aplikasi berhasil diinstall!', 'success');
+                    // Redirect ke app setelah install
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1500);
+                } else {
+                    showNotification('Installasi dibatalkan, membuka versi web...', 'info');
+                    window.location.href = 'index.html';
+                }
+                deferredPrompt = null;
+                
+                // Hide install buttons
+                installButtons.forEach(btn => {
+                    btn.style.display = 'none';
+                });
+            });
+        }
+        
+        // Check if already installed
+        window.addEventListener('appinstalled', () => {
+            console.log('PWA installed');
+            deferredPrompt = null;
+            
+            installButtons.forEach(btn => {
+                btn.style.display = 'none';
+            });
+        });
+        
+        // ============== NOTIFICATION FUNCTION ==============
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            if (!notification) return;
+            
+            notification.textContent = message;
+            notification.style.background = type === 'success' ? '#4ade80' : 
+                                          type === 'error' ? '#ef4444' : 
+                                          '#4361ee';
+            notification.style.display = 'flex';
+            
+            setTimeout(() => {
+                notification.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 300);
+            }, 3000);
+        }
+        
+        // ============== SMOOTH SCROLL ==============
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -490,11 +691,7 @@
             });
         });
         
-        // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1
-        };
-        
+        // ============== ANIMATION ON SCROLL ==============
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -502,14 +699,69 @@
                     entry.target.style.transform = 'translateY(0)';
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.1 });
         
-        // Observe feature cards
+        // Animate feature cards
         document.querySelectorAll('.feature-card').forEach(card => {
             card.style.opacity = '0';
             card.style.transform = 'translateY(20px)';
             card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
             observer.observe(card);
+        });
+        
+        // ============== CHECK PWA SUPPORT ==============
+        function checkPWASupport() {
+            if (!('serviceWorker' in navigator)) {
+                console.log('Service Worker not supported');
+                showNotification('Browser tidak mendukung fitur PWA', 'info');
+                return false;
+            }
+            
+            if (!('BeforeInstallPromptEvent' in window)) {
+                console.log('BeforeInstallPromptEvent not supported');
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('School Manager Landing Page Loaded');
+            
+            // Check PWA support
+            if (!checkPWASupport()) {
+                installButtons.forEach(btn => {
+                    btn.innerHTML = '<i class="fas fa-external-link-alt"></i> Buka di Web';
+                    btn.onclick = () => window.location.href = 'index.html';
+                });
+            }
+            
+            // Show welcome message
+            setTimeout(() => {
+                showNotification('🚀 Selamat datang di School Manager!', 'success');
+            }, 1000);
+        });
+        
+        // ============== KEYBOARD SHORTCUTS ==============
+        document.addEventListener('keydown', (e) => {
+            // Ctrl+I for install
+            if (e.ctrlKey && e.key === 'i') {
+                e.preventDefault();
+                installPWA();
+            }
+            
+            // Ctrl+D for demo
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                window.location.href = 'index.html';
+            }
+            
+            // Ctrl+G for GitHub
+            if (e.ctrlKey && e.key === 'g') {
+                e.preventDefault();
+                window.open('https://github.com/rizqinewramadhan24/school-manager', '_blank');
+            }
         });
     </script>
 </body>
