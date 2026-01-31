@@ -15,48 +15,30 @@
     <meta name="theme-color" content="#4361ee">
 
     <!-- ========== FAVICON FIX 100% ========== -->
-    <link rel="icon" type="image/png" href="./books.png">
-    <link rel="apple-touch-icon" href="./books.png">
-    <link rel="shortcut icon" href="./books.png" type="image/x-icon">
+   <link rel="icon" type="image/png" href="./books.png">
+   <link rel="apple-touch-icon" href="./books.png">
+   <link rel="shortcut icon" href="./books.png" type="image/x-icon">
     <!-- EMERGENCY FAVICON SCRIPT -->
     <!-- EMERGENCY FAVICON SCRIPT - LANDING PAGE -->
 <script>
-    // Force favicon on load - LANDING PAGE (books.png)
+    // HANYA UNTUK LANDING PAGE - pakai books.png
     document.addEventListener('DOMContentLoaded', function() {
         const iconUrl = './books.png?v=' + Date.now();
         
-        // Jangan hapus dulu, cek dulu
-        const existingFavicon = document.querySelector('link[rel="icon"][href*="books.png"]');
+        // Hapus semua favicon yang BUKAN books.png
+        document.querySelectorAll('link[rel*="icon"]').forEach(link => {
+            if (!link.href.includes('books.png')) {
+                link.remove();
+            }
+        });
         
-        if (!existingFavicon) {
-            // Hanya hapus yang bukan books.png
-            document.querySelectorAll('link[rel*="icon"]').forEach(link => {
-                if (!link.href.includes('books.png')) {
-                    link.remove();
-                }
-            });
-            
-            // Create favicon
+        // Pastikan favicon books.png ada
+        if (!document.querySelector('link[href*="books.png"]')) {
             const favicon = document.createElement('link');
             favicon.rel = 'icon';
             favicon.href = iconUrl;
             favicon.type = 'image/png';
             document.head.appendChild(favicon);
-            
-            // Create apple touch icon
-            const appleIcon = document.createElement('link');
-            appleIcon.rel = 'apple-touch-icon';
-            appleIcon.href = iconUrl;
-            document.head.appendChild(appleIcon);
-            
-            // Create shortcut
-            const shortcut = document.createElement('link');
-            shortcut.rel = 'shortcut icon';
-            shortcut.href = iconUrl;
-            shortcut.type = 'image/x-icon';
-            document.head.appendChild(shortcut);
-            
-            console.log('📚 Landing favicon forced:', iconUrl);
         }
     });
 </script>
@@ -614,23 +596,39 @@
 
     <!-- FAVICON EMERGENCY FIX (Double ensure) -->
     <script>
-        // Double check favicon on page load
-        window.addEventListener('load', function() {
-            const iconUrl = 'https://cdn-icons-png.flaticon.com/512/2232/2232688.png';
-            const hasFavicon = document.querySelector('link[rel="icon"]');
+    // Double check favicon on page load - HANYA UNTUK LANDING
+    window.addEventListener('load', function() {
+        // SELALU pakai books.png lokal untuk landing page
+        const iconUrl = './books.png?v=landing_' + Date.now();
+        
+        // Cek apakah sudah ada favicon books.png
+        const existingFavicon = document.querySelector('link[href*="books.png"]');
+        
+        if (!existingFavicon) {
+            // Hapus semua favicon yang bukan books.png
+            document.querySelectorAll('link[rel*="icon"], link[rel="shortcut"]').forEach(link => {
+                if (!link.href.includes('books.png')) {
+                    link.remove();
+                }
+            });
             
-            if (!hasFavicon || hasFavicon.href !== iconUrl) {
-                // Create if missing
-                const favicon = document.createElement('link');
-                favicon.rel = 'icon';
-                favicon.href = iconUrl;
-                favicon.type = 'image/png';
-                document.head.appendChild(favicon);
-                
-                console.log('🔄 Favicon emergency fix applied');
-            }
-        });
-    </script>
+            // Buat favicon baru
+            const favicon = document.createElement('link');
+            favicon.rel = 'icon';
+            favicon.href = iconUrl;
+            favicon.type = 'image/png';
+            document.head.appendChild(favicon);
+            
+            // Juga buat apple touch icon
+            const appleIcon = document.createElement('link');
+            appleIcon.rel = 'apple-touch-icon';
+            appleIcon.href = iconUrl;
+            document.head.appendChild(appleIcon);
+            
+            console.log('📚 Landing page favicon set to books.png');
+        }
+    });
+</script>
 
     <script>
         // ============== PWA INSTALL ==============

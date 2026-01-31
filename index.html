@@ -6,8 +6,33 @@
   
   <!-- ===================== FAVICON FIX ===================== -->
   <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
-  <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" type="image/x-icon">
+<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+<link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png" type="image/x-icon">
+
+<script>
+    // HANYA UNTUK INDEX PAGE - pakai CDN
+    document.addEventListener('DOMContentLoaded', function() {
+        const cdnIcon = 'https://cdn-icons-png.flaticon.com/512/2232/2232688.png?v=' + Date.now();
+        
+        // Hapus semua favicon lama
+        document.querySelectorAll('link[rel*="icon"], link[rel="shortcut"]').forEach(link => {
+            link.remove();
+        });
+        
+        // Tambahkan favicon CDN
+        const favicon = document.createElement('link');
+        favicon.rel = 'icon';
+        favicon.href = cdnIcon;
+        favicon.type = 'image/png';
+        document.head.appendChild(favicon);
+        
+        // Apple touch icon
+        const appleIcon = document.createElement('link');
+        appleIcon.rel = 'apple-touch-icon';
+        appleIcon.href = cdnIcon;
+        document.head.appendChild(appleIcon);
+    });
+</script>
   
   <title>🏫 School Manager | Sistem Informasi Sekolah</title>
   <meta name="description" content="Aplikasi web untuk mengelola data sekolah dengan dark mode, 6 tema, dan penyimpanan lokal">
