@@ -4,12 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
+  <!-- ===================== FAVICON FIX ===================== -->
+  <link rel="icon" type="image/png" href="./favicon.png">
+  <link rel="apple-touch-icon" href="./favicon.png">
+  <link rel="shortcut icon" href="./favicon.png" type="image/x-icon">
+  
   <title>🏫 School Manager | Sistem Informasi Sekolah</title>
   <meta name="description" content="Aplikasi web untuk mengelola data sekolah dengan dark mode, 6 tema, dan penyimpanan lokal">
   <meta name="author" content="Rizqi">
   
   <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#4361ee">
   <meta name="mobile-web-app-capable" content="yes">
   
@@ -294,7 +299,7 @@
     // Register Service Worker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js')
+        navigator.serviceWorker.register('./sw.js')
           .then(registration => {
             console.log('ServiceWorker registered');
           })

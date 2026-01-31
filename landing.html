@@ -11,8 +11,37 @@
     <meta name="author" content="Rizqi">
     
     <!-- PWA -->
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="./manifest.json">
     <meta name="theme-color" content="#4361ee">
+
+    <!-- ========== FAVICON FIX 100% ========== -->
+    <link rel="icon" type="image/x-icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <link rel="shortcut icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2232/2232688.png">
+    <!-- EMERGENCY FAVICON SCRIPT -->
+    <script>
+        // Force favicon on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const iconUrl = 'https://cdn-icons-png.flaticon.com/512/2232/2232688.png';
+            
+            // Remove any existing favicons
+            document.querySelectorAll('link[rel*="icon"]').forEach(link => link.remove());
+            
+            // Create new ones
+            const favicon = document.createElement('link');
+            favicon.rel = 'icon';
+            favicon.href = iconUrl;
+            favicon.type = 'image/png';
+            document.head.appendChild(favicon);
+            
+            const shortcut = document.createElement('link');
+            shortcut.rel = 'shortcut icon';
+            shortcut.href = iconUrl;
+            document.head.appendChild(shortcut);
+            
+            console.log('✅ Favicon forced: ' + iconUrl);
+        });
+    </script>
     
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -515,7 +544,7 @@
                 </div>
             </div>
         </div>
-    </section>
+</section>
 
     <!-- Final CTA -->
     <section class="container">
@@ -564,6 +593,26 @@
             </div>
         </div>
     </footer>
+
+    <!-- FAVICON EMERGENCY FIX (Double ensure) -->
+    <script>
+        // Double check favicon on page load
+        window.addEventListener('load', function() {
+            const iconUrl = 'https://cdn-icons-png.flaticon.com/512/2232/2232688.png';
+            const hasFavicon = document.querySelector('link[rel="icon"]');
+            
+            if (!hasFavicon || hasFavicon.href !== iconUrl) {
+                // Create if missing
+                const favicon = document.createElement('link');
+                favicon.rel = 'icon';
+                favicon.href = iconUrl;
+                favicon.type = 'image/png';
+                document.head.appendChild(favicon);
+                
+                console.log('🔄 Favicon emergency fix applied');
+            }
+        });
+    </script>
 
     <script>
         // ============== PWA INSTALL ==============
@@ -645,6 +694,18 @@
             setTimeout(() => {
                 showNotification('🚀 Selamat datang di School Manager!', 'success');
             }, 1000);
+            
+            // Triple check favicon
+            setTimeout(() => {
+                const icon = document.querySelector('link[rel="icon"]');
+                if (!icon) {
+                    console.warn('No favicon found, creating emergency one');
+                    const favicon = document.createElement('link');
+                    favicon.rel = 'icon';
+                    favicon.href = 'https://cdn-icons-png.flaticon.com/512/2232/2232688.png';
+                    document.head.appendChild(favicon);
+                }
+            }, 500);
         });
     </script>
 </body>
